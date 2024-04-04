@@ -12,7 +12,7 @@ Shipped Android Version | 11.0 GO
 Storage | 32GB/64GB
 Battery | Li-Po 5000 mAh
 Dimensions | 164.5 x 76 x 9.1 mm
-Display | 720 x 1600 pixels, 20:9 ratio (269 ppi density)
+Display | 720 x 1600 pixels, 20:9 ratio (270 ppi density)
 Rear Camera  | 13 MP
 Front Camera | 5 MP
 
