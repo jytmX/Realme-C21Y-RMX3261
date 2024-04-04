@@ -1,21 +1,12 @@
-#
-# Copyright (C) 2022 The Android Open Source Project
-# Copyright (C) 2022 SebaUbuntu's TWRP device tree generator
-#
-# SPDX-License-Identifier: Apache-2.0
-#
-# For building with minimal manifest
+# MINIMAL MANIFEST BUILDING SUPPORT
+ALLOW_MISSING_DEPENDENCIES := true
+BUILD_BROKEN_DUP_RULES := true
+BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 
 # DEVICE PATH
 DEVICE_PATH := device/realme/RMX3261
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 
-# For building with minimal manifest
-ALLOW_MISSING_DEPENDENCIES := true
-BUILD_BROKEN_DUP_RULES := true
-BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
-
-# Architecture
 # ARCH
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
@@ -49,6 +40,14 @@ BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 BOARD_KERNEL_IMAGE_NAME := kernel
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 
+# Decryption
+TW_INCLUDE_CRYPTO := false
+TW_INCLUDE_CRYPTO_FBE := false
+TW_INCLUDE_FBE_METADATA_DECRYPT := false
+
+# TEMP
+TW_CUSTOM_CPU_TEMP_PATH = /sys/devices/platform/soc/soc:aon/64200000.spi/spi_master/spi4/spi4.0/sc27xx-fgu/power_supply/sc27xx-fgu/temp
+
 # Kernel - prebuilt
 TARGET_FORCE_PREBUILT_KERNEL := true
 ifeq ($(TARGET_FORCE_PREBUILT_KERNEL),true)
@@ -57,9 +56,6 @@ TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb.img
 BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
 BOARD_INCLUDE_DTB_IN_BOOTIMG := 
 endif
-
-# TEMP
-TW_CUSTOM_CPU_TEMP_PATH = /sys/devices/platform/soc/soc:aon/64200000.spi/spi_master/spi4/spi4.0/sc27xx-fgu/power_supply/sc27xx-fgu/temp
 
 # PLATFORM
 TARGET_BOARD_PLATFORM := ums512
@@ -79,14 +75,12 @@ AB_OTA_PARTITIONS += \
     vendor \
     product
 
-# Verified Boot
+# AVB
 BOARD_AVB_ENABLE := true
-BOARD_AVB_RECOVERY_ALGORITHM := SHA256_RSA4096
-BOARD_AVB_RECOVERY_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
 BOARD_AVB_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
-BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --set_hashtree_disabled_flag
-BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
-BOARD_AVB_RECOVERY_ROLLBACK_INDEX := 1
+BOARD_AVB_RECOVERY_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
+BOARD_AVB_RECOVERY_ALGORITHM := SHA256_RSA4096
+BOARD_AVB_RECOVERY_ROLLBACK_INDEX := 0
 BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION := 1
 
 # SUPER PARTITION
@@ -127,6 +121,7 @@ PLATFORM_VERSION := 97.0.1
 
 # RECOVERY
 TW_EXCLUDE_APEX := true
+TW_EXCLUDE_PYTHON := true
 TW_EXCLUDE_DEFAULT_USB_INIT := true
 TW_EXCLUDE_TWRPAPP := true
 TW_INCLUDE_NTFS_3G := true
@@ -138,8 +133,6 @@ TW_HAS_NO_RECOVERY_PARTITION := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
 RECOVERY_SDCARD_ON_DATA := true
-TW_USE_MODEL_HARDWARE_ID_FOR_DEVICE_ID := true
-TW_INCLUDE_LPTOOLS := true
 TW_USE_TOOLBOX := true
 
 # MTP
@@ -152,7 +145,8 @@ TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 TW_SCREEN_BLANK_ON_BOOT := true
 TW_NO_SCREEN_BLANK := true
 TW_THEME := portrait_hdpi
-TW_BRIGHTNESS_PATH := "/sys/devices/platform/sprd_backlight/backlight/sprd_backlight/brightness"
+DEVICE_SCREEN_WIDTH := 720
+DEVICE_SCREEN_HEIGHT := 1600
 
 # Fix fastboot reboot
 TW_NO_FASTBOOT_BOOT := true
