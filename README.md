@@ -19,3 +19,5 @@ Front Camera | 5 MP
 
 Specifications in detail
 See [We look there](https://m.gsmarena.com/realme_c21y-10999.php)
+
+
