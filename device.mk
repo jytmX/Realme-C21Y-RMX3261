@@ -6,7 +6,6 @@
 #
 
 LOCAL_PATH := device/realme/RMX3261
-PRODUCT_PLATFORM := ums512
 
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
@@ -42,9 +41,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     bootctrl.unisoc \
     bootctrl.unisoc.recovery
-	
-PRODUCT_PACKAGES += \
-    vendor.unisoc.hardware.tswake-service
 
 # Fastbootd
 PRODUCT_PACKAGES += \
